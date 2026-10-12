@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume OCR Extraction</title>
+<link rel="stylesheet" href="app.css">
+<script>
+  if (new URLSearchParams(location.search).has("embed")) document.documentElement.classList.add("embed");
+</script>
+</head>
+<body>
+  <header class="intro">
+    <h1>Resume OCR extraction</h1>
+    <p>OCR with docTR, structured extraction with Qwen3-4B, on one GPU in a Chalk scaling group.</p>
+  </header>
+
+  <section class="pickers" aria-label="Choose a resume">
+    <div id="samples" class="samples"></div>
+    <label class="upload" for="file">
+      <span class="upload-icon" aria-hidden="true">+</span>
+      <span class="upload-title">Upload your own</span>
+      <span class="upload-blurb">PDF, PNG or JPEG up to 5 MB. Processed in memory, never stored.</span>
+      <input id="file" type="file" accept="application/pdf,image/png,image/jpeg">
+    </label>
+  </section>
+
+  <ol class="stages" aria-label="Progress">
+    <li data-stage="render"><span class="dot"></span>Render<em></em></li>
+    <li data-stage="ocr"><span class="dot"></span>OCR<em></em></li>
+    <li data-stage="extract"><span class="dot"></span>Extract<em></em></li>
+  </ol>
+  <div id="error" class="error" role="alert" hidden></div>
+
+  <main class="workspace">
+    <section class="panel doc-panel" aria-label="Document">
+      <div class="panel-head">
+        <span>Document</span>
+        <label class="toggle"><input id="show-boxes" type="checkbox" checked> OCR boxes</label>
+      </div>
+      <div id="pages" class="pages">
+        <p class="placeholder">Pick a sample resume or upload one to start.</p>
+      </div>
+    </section>
+
+    <section class="panel out-panel" aria-label="Extracted data">
+      <div class="panel-head">
+        <span>Extracted</span>
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="fields">Fields</button>
+          <button role="tab" aria-selected="false" data-tab="json">JSON</button>
+        </div>
+      </div>
+      <div id="fields" class="fields"><p class="placeholder">Fields appear here as the model writes them. Hover one to see where it came from on the page.</p></div>
+      <pre id="json" class="json" hidden></pre>
+      <div id="stats" class="stats"></div>
+    </section>
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>
