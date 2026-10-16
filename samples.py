@@ -285,19 +285,19 @@ def build_samples() -> list[Sample]:
     return [
         Sample(
             "backend-engineer",
-            "Backend engineer",
+            "Single Column",
             "Single column, born-digital PDF",
             software_engineer(),
         ),
         Sample(
             "data-scientist",
-            "Data scientist",
+            "Dual Column w/ Sidebar",
             "Two-column layout with a sidebar",
             data_scientist(),
         ),
         Sample(
             "scanned-nurse",
-            "Clinical operations manager",
+            "Scanned Page",
             "Scanned page: image only, skewed and noisy",
             scan(operations_manager_text(), seed=7),
         ),
