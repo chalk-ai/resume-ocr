@@ -32,7 +32,7 @@ Credentials come from the SDK’s ambient credentials from `chalk login`, or fro
 `CHALK_CLIENT_ID`, `CHALK_CLIENT_SECRET` and `CHALK_ENVIRONMENT_ID`.
 
 ```bash
-./deploy.py --gpu nvidia-l4
+./deploy.py
 ```
 
 The image builds on the official `vllm/vllm-openai` image, adding docTR, PDFium and the OCR
@@ -86,5 +86,5 @@ company, school and contact detail in the sample resumes is fictional.
 
 The SDK reads credentials, API host, and the selected environment from your existing
 `chalk login` in `~/.chalk.yml`, including project-scoped and default logins.
-For unattended runs, `CHALK_CLIENT_ID` and `CHALK_CLIENT_SECRET` remain supported. Where available, `--env-id`
-overrides the target environment; otherwise the SDK uses your login or environment settings.
+For unattended runs, `CHALK_CLIENT_ID` and `CHALK_CLIENT_SECRET` remain supported.
+The examples use the current environment selected by your Chalk login.

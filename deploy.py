@@ -11,14 +11,12 @@ structured extraction. The replica also serves the demo page. The image builds o
 vLLM image; the LLM's weights download when a replica starts.
 
 Credentials come from your existing `chalk login` (or the CHALK_* env vars):
-    ./deploy.py [--env-id <environment>] [--gpu nvidia-l4]
+    ./deploy.py
 Then open the printed URL and pick a resume.
 """
 
 from __future__ import annotations
 
-import argparse
-import os
 import time
 from pathlib import Path
 
@@ -32,16 +30,6 @@ APP_FILES = ["server.py", "ocr.py", "extract.py", "samples.py", "index.html", "a
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--name", default="resume-ocr")
-    # Defaults to the environment in your existing `chalk login` (or CHALK_ENVIRONMENT_ID).
-    parser.add_argument("--env-id", default=None)
-    parser.add_argument("--gpu", default="nvidia-l4")
-    parser.add_argument("--ready-timeout", type=float, default=2400.0)
-    args = parser.parse_args()
-
-    if args.env_id:
-        os.environ["CHALK_ENVIRONMENT"] = args.env_id
     from chalkcompute import Image, ReadinessProbe, ScalingGroup, StartupProbe
 
     image = (
@@ -71,8 +59,8 @@ def main() -> None:
 
     sg = ScalingGroup(
         image=image,
-        name=args.name,
-        gpu=args.gpu,
+        name='resume-ocr',
+        gpu='nvidia-l4',
         cpu="4",
         memory="24Gi",
         env={
@@ -93,7 +81,7 @@ def main() -> None:
     )
     t0 = time.monotonic()
     try:
-        sg.deploy(build_timeout=3000.0, ready_timeout=args.ready_timeout)
+        sg.deploy(build_timeout=3000.0, ready_timeout=2400.0)
     finally:
         print(f"deploy returned after {time.monotonic() - t0:.0f}s")
     print("web_url:", sg.web_url)
